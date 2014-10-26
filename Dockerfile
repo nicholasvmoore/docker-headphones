@@ -14,4 +14,4 @@ RUN yum -y install git; yum clean all;\
 
 EXPOSE 8181
 
-ENTRYPOINT ["/usr/bin/python", "/opt/Headphones.py", "--data_dir=/config"]
+ENTRYPOINT ["/usr/bin/python", "/opt/Headphones.py", "--datadir=/config"]
