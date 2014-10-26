@@ -1,0 +1,22 @@
+[Unit]
+Description=Headphones
+After=rpcbind.service
+After=docker.service
+After=mnt-lun0-media.mount
+After=mnt-lun0-software.mount
+Requires=docker.service
+Requires=rpcbind.service
+Requires=mnt-lun0-media.mount
+Requires=mnt-lun0-software.mount
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+KillMode=none
+ExecStartPre=-/usr/bin/docker stop headphones
+ExecStartPre=-/usr/bin/docker rm headphones
+ExecStart=/usr/bin/docker run -v /mnt/lun0/software/docker/music/:/config:rw -v /mnt/lun0/media:/media:rw -p 8181:8181 --name=headphones nicholasvmoore/docker-headphones
+ExecStop=/usr/bin/docker stop headphones
+
+[Install]
+WantedBy=multi-user.target
